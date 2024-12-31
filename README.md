@@ -14,8 +14,8 @@ A Python-based typing automation tool that simulates human-like typing behavior 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/cozbrozdevarc/typing-automation.git
-cd typing-automation
+git clone https://github.com/cozbrozdevarc/typing_simulator.git
+cd typing_simulator
 ```
 
 2. Install the required packages:
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 Run the main script:
 ```bash
-python -m typing_automation
+python -m typing_simulator
 ```
 
 ## Configuration
