@@ -42,41 +42,56 @@ class LoadingSpinner:
 def build_app():
     print("Starting build process...\n")
     
-    build_folder = os.path.join(os.getcwd(), 'build')
-    os.makedirs(build_folder, exist_ok=True)
-    
     with LoadingSpinner("Building executable... This may take a few minutes"):
+        if os.path.exists('TypingMocker.exe'):
+            os.remove('TypingMocker.exe')
+        if os.path.exists('TypingMocker.spec'):
+            os.remove('TypingMocker.spec')
+        if os.path.exists('dist'):
+            shutil.rmtree('dist')
+        if os.path.exists('build'):
+            shutil.rmtree('build')
+            
         PyInstaller.__main__.run([
-            '../main.py',
+            os.path.abspath('../main.py'),
             '--onefile',
-            '--name=TypingAutomation',
-            '--add-data=../typing_automation;typing_automation',
+            '--name=TypingMocker',
+            f'--add-data={os.path.abspath("../typing_automation")};typing_automation',
+            f'--add-data={os.path.abspath("../typing_settings.json")};.',
+            '--distpath=dist',  
             '--clean',
             '--noupx',
         ])
     
-    exe_name = "TypingAutomation.exe" if os.name == 'nt' else "TypingAutomation"
-    exe_path = os.path.join(os.getcwd(), 'dist', exe_name)
+    
+    exe_name = "TypingMocker.exe" if os.name == 'nt' else "TypingMocker"
+    destination_folder = os.path.join(os.getcwd(), "executable_folder")
+
+    if not os.path.exists(destination_folder):
+        os.makedirs(destination_folder)
+
+    exe_path = os.path.join("dist", exe_name)
+    final_exe_path = os.path.join(destination_folder, exe_name)
     
     if os.path.exists(exe_path):
-        with LoadingSpinner("Organizing files"):
-            new_exe_path = os.path.join(os.getcwd(), exe_name)
-            shutil.move(exe_path, new_exe_path)
-            
-            # Clean up temporary directories
-            shutil.rmtree('dist', ignore_errors=True)
-            shutil.rmtree('build', ignore_errors=True)
-            if os.path.exists('TypingAutomation.spec'):
-                os.remove('TypingAutomation.spec')
+        shutil.move(exe_path, final_exe_path)
+        with LoadingSpinner("Cleaning up"):
+            if os.path.exists('build'):
+                shutil.rmtree('build')
+            if os.path.exists('dist'):
+                shutil.rmtree('dist')
+            if os.path.exists('TypingMocker.spec'):
+                os.remove('TypingMocker.spec')
         
         print("\n✨ Build complete! ✨")
-        print(f"📁 Executable has been moved to: {os.getcwd()}")
-        print(f"▶️  You can run {exe_name} from the build directory.")
+        print(f"📁 Executable has been moved to: {final_exe_path}")
+        print(f"▶️  You can run {exe_name} from the executable_folder directory.")
     else:
         print("\n❌ Error: Executable was not created successfully.")
 
 if __name__ == "__main__":
     try:
+        os.chdir(os.path.dirname(os.path.abspath(__file__)))
         build_app()
     except KeyboardInterrupt:
         print("\n\n🛑 Build process interrupted by user.")

@@ -14,7 +14,7 @@ class Settings:
 
     def __init__(self):
         self.settings = self.DEFAULT_SETTINGS.copy()
-        self.settings_file = 'typing_mocker/typing_settings.json'
+        self.settings_file = '../typing_settings.json'
         self.load_settings()
 
     def load_settings(self) -> None:
