@@ -47,10 +47,10 @@ def build_app():
     
     with LoadingSpinner("Building executable... This may take a few minutes"):
         PyInstaller.__main__.run([
-            'main.py',
+            '../main.py',
             '--onefile',
             '--name=TypingAutomation',
-            '--add-data=src;src',
+            '--add-data=../typing_automation;typing_automation',
             '--clean',
             '--noupx',
         ])
@@ -60,19 +60,18 @@ def build_app():
     
     if os.path.exists(exe_path):
         with LoadingSpinner("Organizing files"):
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            new_folder = os.path.join(build_folder, f"TypingAutomation_{timestamp}")
-            os.makedirs(new_folder, exist_ok=True)
-            
-            new_exe_path = os.path.join(new_folder, exe_name)
+            new_exe_path = os.path.join(os.getcwd(), exe_name)
             shutil.move(exe_path, new_exe_path)
             
+            # Clean up temporary directories
             shutil.rmtree('dist', ignore_errors=True)
             shutil.rmtree('build', ignore_errors=True)
+            if os.path.exists('TypingAutomation.spec'):
+                os.remove('TypingAutomation.spec')
         
         print("\n✨ Build complete! ✨")
-        print(f"📁 Executable has been moved to: {new_folder}")
-        print(f"▶️  You can run {exe_name} from that location.")
+        print(f"📁 Executable has been moved to: {os.getcwd()}")
+        print(f"▶️  You can run {exe_name} from the build directory.")
     else:
         print("\n❌ Error: Executable was not created successfully.")
 
