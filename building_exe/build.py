@@ -42,6 +42,16 @@ class LoadingSpinner:
 def build_app():
     print("Starting build process...\n")
     
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    print(f"Script directory: {script_dir}")
+    print(f"Initial working directory: {os.getcwd()}")
+    os.chdir(script_dir) 
+    print(f"New working directory: {os.getcwd()}")
+
+    #icon_path = "executable_folder/icon/typingmockericon.ico"
+    #print(f"Icon path: {icon_path}")
+    #print(f"Icon exists: {os.path.exists(icon_path)}")
+    
     with LoadingSpinner("Building executable... This may take a few minutes"):
         if os.path.exists('TypingMocker.exe'):
             os.remove('TypingMocker.exe')
@@ -58,7 +68,8 @@ def build_app():
             '--name=TypingMocker',
             f'--add-data={os.path.abspath("../typing_automation")};typing_automation',
             f'--add-data={os.path.abspath("../typing_settings.json")};.',
-            '--distpath=dist',  
+            '--distpath=dist',
+            #f'--icon={icon_path}',
             '--clean',
             '--noupx',
         ])
@@ -91,7 +102,6 @@ def build_app():
 
 if __name__ == "__main__":
     try:
-        os.chdir(os.path.dirname(os.path.abspath(__file__)))
         build_app()
     except KeyboardInterrupt:
         print("\n\n🛑 Build process interrupted by user.")
