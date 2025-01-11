@@ -14,14 +14,19 @@ class Settings:
 
     def __init__(self):
         self.settings = self.DEFAULT_SETTINGS.copy()
-        self.settings_file = '../typing_settings.json'
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.settings_file = os.path.join(project_root, 'typing_settings.json')
         self.load_settings()
 
     def load_settings(self) -> None:
         try:
             with open(self.settings_file, 'r') as f:
-                self.settings.update(json.load(f))
-        except FileNotFoundError:
+                content = f.read().strip()
+                if content:
+                    self.settings.update(json.loads(content))
+                else:
+                    self.save_settings()
+        except (FileNotFoundError, json.JSONDecodeError):
             self.save_settings()
 
     def save_settings(self) -> None:

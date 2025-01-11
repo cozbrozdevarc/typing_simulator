@@ -48,19 +48,27 @@ def build_app():
     os.chdir(script_dir) 
     print(f"New working directory: {os.getcwd()}")
 
-    #icon_path = "executable_folder/icon/typingmockericon.ico"
-    #print(f"Icon path: {icon_path}")
-    #print(f"Icon exists: {os.path.exists(icon_path)}")
+    icon_path = "executable_folder/icon/typingmockericon.ico"
+    print(f"Icon path: {icon_path}")
+    print(f"Icon exists: {os.path.exists(icon_path)}")
+    
+    def clean_files(directory):
+        files_to_clean = [
+            'TypingMocker.spec',
+            'dist',
+            'build'
+        ]
+        for file in files_to_clean:
+            path = os.path.join(directory, file)
+            if os.path.exists(path):
+                if os.path.isdir(path):
+                    shutil.rmtree(path)
+                else:
+                    os.remove(path)
     
     with LoadingSpinner("Building executable... This may take a few minutes"):
-        if os.path.exists('TypingMocker.exe'):
-            os.remove('TypingMocker.exe')
-        if os.path.exists('TypingMocker.spec'):
-            os.remove('TypingMocker.spec')
-        if os.path.exists('dist'):
-            shutil.rmtree('dist')
-        if os.path.exists('build'):
-            shutil.rmtree('build')
+        clean_files('.')
+        clean_files('..')
             
         PyInstaller.__main__.run([
             os.path.abspath('../main.py'),
@@ -69,7 +77,7 @@ def build_app():
             f'--add-data={os.path.abspath("../typing_automation")};typing_automation',
             f'--add-data={os.path.abspath("../typing_settings.json")};.',
             '--distpath=dist',
-            #f'--icon={icon_path}',
+            f'--icon={icon_path}',
             '--clean',
             '--noupx',
         ])
@@ -87,12 +95,8 @@ def build_app():
     if os.path.exists(exe_path):
         shutil.move(exe_path, final_exe_path)
         with LoadingSpinner("Cleaning up"):
-            if os.path.exists('build'):
-                shutil.rmtree('build')
-            if os.path.exists('dist'):
-                shutil.rmtree('dist')
-            if os.path.exists('TypingMocker.spec'):
-                os.remove('TypingMocker.spec')
+            clean_files('.')
+            clean_files('..')#
         
         print("\n✨ Build complete! ✨")
         print(f"📁 Executable has been moved to: {final_exe_path}")

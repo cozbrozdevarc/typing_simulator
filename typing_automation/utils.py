@@ -1,12 +1,17 @@
 from datetime import datetime
 from typing import Dict, Any
+import os
+
 
 def save_typing_stats(stats: Dict[str, Any]) -> str:
     stats_file = f"typing_stats_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     duration = (stats['end_time'] - stats['start_time']).total_seconds()
     wpm = (stats['words_typed'] / duration) * 60
     cpm = (stats['characters_typed'] / duration) * 60
-    
+
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    stats_file = os.path.join(project_root, stats_file)
+
     with open(stats_file, 'w') as f:
         f.write("Typing Session Statistics\n")
         f.write("=======================\n")

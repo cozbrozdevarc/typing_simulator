@@ -118,19 +118,25 @@ class TypingAutomation:
             return
 
         try:
-            with open(file_name, 'r') as file:
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            file_path = os.path.join(project_root, file_name)
+            with open(file_path, 'r') as file:
                 text_content = file.read()
         except FileNotFoundError:
-            print(f"File '{file_name}' not found in the current directory.")
+            print(f"File '{file_name}' not found in the project root directory.")
             return
+        try:
+            words = text_content.split()
+            word_count = len(words)
+            num_words_to_type = self.get_words_to_type(word_count)
+        except Exception as e:
+            print(f"Error: {e}")
 
         print(f"Waiting for {start_delay} seconds before starting...")
         time.sleep(start_delay)
         print("\nTyping starts now...\n")
         
-        words = text_content.split()
-        word_count = len(words)
-        num_words_to_type = self.get_words_to_type(word_count)
+       
         
         self.type_text(words, num_words_to_type)
 
@@ -140,4 +146,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -1,0 +1,8 @@
+{
+    "min_typing_speed": 0.3,
+    "max_typing_speed": 0.7,
+    "min_chunk_size": 10,
+    "max_chunk_size": 20,
+    "min_pause": 1,
+    "max_pause": 5
+}
