@@ -21,6 +21,9 @@ def save_typing_stats(stats: Dict[str, Any]) -> str:
         f.write(f"Characters Typed: {stats['characters_typed']}\n")
         f.write(f"Words Per Minute: {wpm:.2f}\n")
         f.write(f"Characters Per Minute: {cpm:.2f}\n")
+        f.write(f"Errors Made: {stats['errors_made']}\n")
+        f.write(f"Corrections Made: {stats['corrections_made']}\n")
+        f.write(f"Error Rate: {(stats['errors_made'] / stats['characters_typed'] * 100):.2f}%\n")
     
     return stats_file
 

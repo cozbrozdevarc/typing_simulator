@@ -9,7 +9,10 @@ class Settings:
         'min_chunk_size': 10,
         'max_chunk_size': 20,
         'min_pause': 1,
-        'max_pause': 5
+        'max_pause': 5,
+        'error_rate': 0.1,
+        'correction_delay': 0.5,
+        'max_error_chars': 2
     }
 
     def __init__(self):

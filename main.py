@@ -1,7 +1,6 @@
 from typing_automation.automation import TypingAutomation
 
 def main():
-    """Entry point for the typing automation application."""
     try:
         app = TypingAutomation()
         app.main()

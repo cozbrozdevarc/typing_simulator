@@ -4,5 +4,8 @@
     "min_chunk_size": 10,
     "max_chunk_size": 20,
     "min_pause": 1,
-    "max_pause": 5
+    "max_pause": 5,
+    "error_rate": 0.2,
+    "correction_delay": 1.0,
+    "max_error_chars": 2
 }

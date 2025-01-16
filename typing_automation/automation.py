@@ -15,7 +15,9 @@ class TypingAutomation:
             'start_time': None,
             'end_time': None,
             'words_typed': 0,
-            'characters_typed': 0
+            'characters_typed': 0,
+            'errors_made': 0,
+            'corrections_made': 0
         }
 
     def configure_settings(self) -> None:
@@ -48,19 +50,68 @@ class TypingAutomation:
             except ValueError as e:
                 print(str(e))
 
+    def simulate_typo(self, char: str) -> str:
+        keyboard_layout = {
+            'a': 'qwsz', 'b': 'vghn', 'c': 'xdfv', 'd': 'srfce', 'e': 'wrsdf',
+            'f': 'drtgv', 'g': 'ftyhb', 'h': 'gyujn', 'i': 'ujko', 'j': 'huikm',
+            'k': 'jiol', 'l': 'kop', 'm': 'njk', 'n': 'bhjm', 'o': 'iklp',
+            'p': 'ol', 'q': 'wa', 'r': 'edft', 's': 'awdxz', 't': 'rfgy',
+            'u': 'yhji', 'v': 'cfgb', 'w': 'qase', 'x': 'zsdc', 'y': 'tghu',
+            'z': 'asx'
+        }
+        char = char.lower()
+        if char in keyboard_layout:
+            return random.choice(keyboard_layout[char])
+        return char
+
+    def type_with_errors(self, word: str) -> None:
+        error_rate = self.settings.get('error_rate')
+        max_error_chars = self.settings.get('max_error_chars')
+        correction_delay = self.settings.get('correction_delay')
+        
+        i = 0
+        while i < len(word):
+            if random.random() < error_rate:
+                error_chars = []
+                num_errors = random.randint(1, int(max_error_chars))
+                for _ in range(num_errors):
+                    wrong_char = self.simulate_typo(word[i])
+                    error_chars.append(wrong_char)
+                    pyautogui.typewrite(wrong_char)
+                    time.sleep(random.uniform(0.1, 0.2))
+                
+                time.sleep(correction_delay)
+                
+                for _ in range(len(error_chars)):
+                    pyautogui.press('backspace')
+                    time.sleep(0.1)
+                
+                pyautogui.typewrite(word[i])
+                
+                self.typing_stats['errors_made'] += 1
+                self.typing_stats['corrections_made'] += 1
+            else:
+                pyautogui.typewrite(word[i])
+            
+            i += 1
+            time.sleep(random.uniform(
+                self.settings.get('min_typing_speed'),
+                self.settings.get('max_typing_speed')
+            ))
+
     def type_text(self, words: list, num_words: int) -> None:
         i = 0
         self.typing_stats['start_time'] = datetime.now()
 
         while i < num_words:
             chunk_size = random.randint(
-                self.settings.get('min_chunk_size'),
-                self.settings.get('max_chunk_size')
+                int(self.settings.get('min_chunk_size')),
+                int(self.settings.get('max_chunk_size'))
             )
             
             next_pause = random.randint(
-                self.settings.get('min_pause'),
-                self.settings.get('max_pause')
+                int(self.settings.get('min_pause')),
+                int(self.settings.get('max_pause'))
             )
             
             for _ in range(chunk_size):
@@ -68,17 +119,11 @@ class TypingAutomation:
                     break
                 
                 word = words[i]
-                pyautogui.typewrite(word)
+                self.type_with_errors(word)
                 pyautogui.press('space')
                 
                 self.typing_stats['words_typed'] += 1
                 self.typing_stats['characters_typed'] += len(word)
-                
-                typing_speed = random.uniform(
-                    self.settings.get('min_typing_speed'),
-                    self.settings.get('max_typing_speed')
-                )
-                time.sleep(typing_speed)
                 
                 i += 1
             
@@ -135,8 +180,6 @@ class TypingAutomation:
         print(f"Waiting for {start_delay} seconds before starting...")
         time.sleep(start_delay)
         print("\nTyping starts now...\n")
-        
-       
         
         self.type_text(words, num_words_to_type)
 
