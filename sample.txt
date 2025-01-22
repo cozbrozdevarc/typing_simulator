@@ -1,1 +1,11 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+pecific trait, while an allele is a version of a gene, such as T for tall or t for short in the gene for plant height.  
+
+6. A dominant allele shows its effect even if there is only one copy, while a recessive allele only shows its effect if both alleles are recessive, such as TT or Tt being tall, but tt being short.  
+
+7. Homozygous dominant means both alleles for a gene are dominant, such as TT for a tall plant.  
+
+8. Homozygous recessive means both alleles for a gene are recessive, such as tt for a short plant.  
+
+9. Heterozygous dominant can be seen because the dominant allele shows its effect, but heterozygous recessive cannot be seen since it is not a valid genetic state; recessive traits only appear if both alleles are recessive.  
+
+10. The genotype for a heterozygous tall woman would be Tt, and the possible gametes formed in her ovary would be T and t.

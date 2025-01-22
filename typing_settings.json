@@ -1,11 +1,91 @@
 {
-    "min_typing_speed": 0.3,
-    "max_typing_speed": 0.7,
-    "min_chunk_size": 10,
-    "max_chunk_size": 20,
-    "min_pause": 1,
-    "max_pause": 5,
-    "error_rate": 0.2,
-    "correction_delay": 1.0,
-    "max_error_chars": 2
+    "// Settings Documentation": {
+        "min_typing_speed": {
+            "description": "Minimum delay between keystrokes in seconds. Lower = faster typing.",
+            "recommended_range": "0.1 to 0.5",
+            "example": "0.3 = moderate typing speed (~80 WPM)"
+        },
+        "max_typing_speed": {
+            "description": "Maximum delay between keystrokes. Creates natural speed variation.",
+            "recommended_range": "0.3 to 1.0",
+            "example": "0.7 = occasional slower typing (~40 WPM)"
+        },
+        "min_chunk_size": {
+            "description": "Minimum number of words to type before taking a pause.",
+            "recommended_range": "5 to 15",
+            "example": "10 = type at least 10 words before pausing"
+        },
+        "max_chunk_size": {
+            "description": "Maximum number of words to type before taking a pause.",
+            "recommended_range": "15 to 30",
+            "example": "20 = type up to 20 words before pausing"
+        },
+        "min_pause": {
+            "description": "Minimum pause duration (in seconds) between chunks of words.",
+            "recommended_range": "1 to 3",
+            "example": "1 = brief pause to simulate thinking"
+        },
+        "max_pause": {
+            "description": "Maximum pause duration between chunks. Simulates longer thinking breaks.",
+            "recommended_range": "3 to 10",
+            "example": "5 = longer pause to simulate reading/thinking"
+        },
+        "error_rate": {
+            "description": "Probability (0-1) of making a typo for each character typed.",
+            "recommended_range": "0.0 to 0.3",
+            "example": "0.2 = 20% chance of typo per character"
+        },
+        "correction_delay": {
+            "description": "How long to wait (in seconds) before correcting a typo.",
+            "recommended_range": "0.5 to 2.0",
+            "example": "1.0 = wait one second before fixing mistake"
+        },
+        "max_error_chars": {
+            "description": "Maximum number of wrong characters to type when making a typo.",
+            "recommended_range": "1 to 3",
+            "example": "2 = up to 2 wrong characters before correction"
+        }
+    },
+
+    "// Actual Settings (modify these values)": {
+        "min_typing_speed": 0.3,
+        "max_typing_speed": 0.7,
+        "min_chunk_size": 10,
+        "max_chunk_size": 20,
+        "min_pause": 1,
+        "max_pause": 5,
+        "error_rate": 0.2,
+        "correction_delay": 1.0,
+        "max_error_chars": 2
+    },
+
+    "// Preset Configurations (copy values to settings above)": {
+        "fast_accurate": {
+            "min_typing_speed": 0.1,
+            "max_typing_speed": 0.3,
+            "error_rate": 0.05,
+            "min_chunk_size": 15,
+            "max_chunk_size": 30,
+            "min_pause": 1,
+            "max_pause": 3
+        },
+        "natural_human": {
+            "min_typing_speed": 0.3,
+            "max_typing_speed": 0.7,
+            "error_rate": 0.2,
+            "min_chunk_size": 10,
+            "max_chunk_size": 20,
+            "min_pause": 1,
+            "max_pause": 5
+        },
+        "learning_typist": {
+            "min_typing_speed": 0.5,
+            "max_typing_speed": 1.0,
+            "error_rate": 0.3,
+            "min_chunk_size": 5,
+            "max_chunk_size": 15,
+            "min_pause": 2,
+            "max_pause": 7
+        }
+    }
 }
